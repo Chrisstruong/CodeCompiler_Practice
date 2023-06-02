@@ -32,7 +32,7 @@ const JobSchema = new mongoose.Schema({
     default: "pending",
     enum: ["pending", "success", "error"]
   }
-},);
+},{timestamps: true});
 
 const Job = mongoose.model("job", JobSchema);
 

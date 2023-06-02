@@ -1,13 +1,14 @@
 const express = require("express")
 const cors = require('cors')
 require("dotenv").config()
-const {MONGODB_URI} = process.env
+require("./config/db.connection")
+const {MONGODB_URI, PORT} = process.env
 
 
 const {generateFile} =  require('./generateFile')
 const {executeCpp} = require('./executeCpp')
 const { executePy } = require("./executePy")
-const {Job} = require('./models/Job')
+const Job = require('./models/Job')
 
 const app = express()
 
@@ -31,24 +32,31 @@ app.post("/run", async (req, res) => {
     const filepath = await generateFile(language, code)
 
     const job = await new Job({language, filepath}).save()
+    const jobId = job["_id"]
 
+    res.status(201).json({success: true, jobId})
     console.log(job)
 
     // We need to run the file and send the response
     let output 
+
+        
     if(language === "cpp") {
          output = await executeCpp(filepath)
     } else {
          output = await executePy(filepath)
     }
 
-    return res.json({ filepath, output })
+    console.log({filepath, output})
+
+    //return res.json({ filepath, output })
     } catch(err) {
-        res.status(500).json({err})
+        console.log(err)
+        //res.status(500).json({err})
     }
 })
 
-app.listen(1000, () => {
-    console.log(`Listening on port 1000!`)
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}!`)
 })    
 
