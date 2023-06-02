@@ -1,6 +1,7 @@
 const express = require("express")
 
 const {generateFile} =  require('./generateFile')
+const {executeCpp} = require('./executeCpp')
 
 const app = express()
 
@@ -17,15 +18,21 @@ app.post("/run", async (req, res) => {
     if (code === undefined) {
         return res.status(400).json({success: false, error: "Empty code body!"})
     }
+    try{
 
     // We need to generate a c++ file with content from the request
     const filepath = await generateFile(language, code)
 
     // We need to run the file and send the response
+    const output = await executeCpp(filepath)
 
-    return res.json({ filepath })
+    return res.json({ filepath, output })
+    } catch(err) {
+        res.status(500).json({err})
+    }
 })
 
 app.listen(1000, () => {
     console.log(`Listening on port 1000!`)
 })    
+
