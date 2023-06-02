@@ -1,8 +1,13 @@
 const express = require("express")
 const cors = require('cors')
+require("dotenv").config()
+const {MONGODB_URI} = process.env
+
 
 const {generateFile} =  require('./generateFile')
 const {executeCpp} = require('./executeCpp')
+const { executePy } = require("./executePy")
+const {Job} = require('./models/Job')
 
 const app = express()
 
@@ -25,8 +30,17 @@ app.post("/run", async (req, res) => {
     // We need to generate a c++ file with content from the request
     const filepath = await generateFile(language, code)
 
+    const job = await new Job({language, filepath}).save()
+
+    console.log(job)
+
     // We need to run the file and send the response
-    const output = await executeCpp(filepath)
+    let output 
+    if(language === "cpp") {
+         output = await executeCpp(filepath)
+    } else {
+         output = await executePy(filepath)
+    }
 
     return res.json({ filepath, output })
     } catch(err) {
