@@ -16,8 +16,26 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    return res.json({hello: "world!"})
+app.get("/status", async(req, res)=> {
+    const jobId = req.query.id
+    console.log("status requested", jobId)
+
+    if (jobId == undefined){
+        return res.status(400).json({success: false, error:"missing id query param"})
+    }
+
+    
+    try{
+        const job = await new Job.findById(jobId)
+        if (job===undefined) {
+            return res.status(404).json({success: false, error: "invalid job id"})
+        }
+
+        return res.status(200).json(job)
+
+    } catch (err) {
+        return res.status(400).json({success: false, error: JSON.stringify(err)})
+    }
 })
 
 app.post("/run", async (req, res) => {
@@ -26,6 +44,8 @@ app.post("/run", async (req, res) => {
     if (code === undefined) {
         return res.status(400).json({success: false, error: "Empty code body!"})
     }
+    let job
+
     try{
 
     // We need to generate a c++ file with content from the request
@@ -40,18 +60,27 @@ app.post("/run", async (req, res) => {
     // We need to run the file and send the response
     let output 
 
-        
+    job["startedAt"] = new Date()
     if(language === "cpp") {
          output = await executeCpp(filepath)
     } else {
          output = await executePy(filepath)
     }
 
-    console.log({filepath, output})
+    job["completedAt"] = new Date()
+    job["status"] = "success"
+    job["output"] = output
+
+    await job.save()
+    console.log(job)
 
     //return res.json({ filepath, output })
     } catch(err) {
-        console.log(err)
+        job["completedAt"] = new Date()
+        job["status"] = "error"
+        job['output'] = JSON.stringify(err)
+        await job.save()
+        console.log(job)
         //res.status(500).json({err})
     }
 })
