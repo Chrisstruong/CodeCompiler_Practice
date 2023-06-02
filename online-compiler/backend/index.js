@@ -1,10 +1,12 @@
 const express = require("express")
+const cors = require('cors')
 
 const {generateFile} =  require('./generateFile')
 const {executeCpp} = require('./executeCpp')
 
 const app = express()
 
+app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
@@ -14,7 +16,7 @@ app.get('/', (req, res) => {
 
 app.post("/run", async (req, res) => {
     const { language = "cpp", code} = req.body
-
+    console.log(language, code.length)
     if (code === undefined) {
         return res.status(400).json({success: false, error: "Empty code body!"})
     }
