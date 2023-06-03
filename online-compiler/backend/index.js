@@ -8,6 +8,7 @@ const {MONGODB_URI, PORT} = process.env
 const {generateFile} =  require('./generateFile')
 const {executeCpp} = require('./executeCpp')
 const { executePy } = require("./executePy")
+const { addJobToQueue } = require('./jobQueue')
 const Job = require('./models/Job')
 
 const app = express()
@@ -53,7 +54,7 @@ app.post("/run", async (req, res) => {
 
     const job = await new Job({language, filepath}).save()
     const jobId = job["_id"]
-
+    addJobToQueue(jobId)
     res.status(201).json({success: true, jobId})
     console.log(job)
 
