@@ -6,8 +6,7 @@ const {MONGODB_URI, PORT} = process.env
 
 
 const {generateFile} =  require('./generateFile')
-const {executeCpp} = require('./executeCpp')
-const { executePy } = require("./executePy")
+
 const { addJobToQueue } = require('./jobQueue')
 const Job = require('./models/Job')
 
@@ -61,28 +60,11 @@ app.post("/run", async (req, res) => {
     // We need to run the file and send the response
     let output 
 
-    job["startedAt"] = new Date()
-    if(language === "cpp") {
-         output = await executeCpp(filepath)
-    } else {
-         output = await executePy(filepath)
-    }
-
-    job["completedAt"] = new Date()
-    job["status"] = "success"
-    job["output"] = output
-
-    await job.save()
-    console.log(job)
+    
 
     //return res.json({ filepath, output })
     } catch(err) {
-        job["completedAt"] = new Date()
-        job["status"] = "error"
-        job['output'] = JSON.stringify(err)
-        await job.save()
-        console.log(job)
-        //res.status(500).json({err})
+        return res.status(500).json({success: false, err: JSON.stringify(err)})
     }
 })
 
