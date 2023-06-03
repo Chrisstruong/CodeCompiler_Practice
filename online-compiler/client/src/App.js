@@ -1,6 +1,8 @@
 import axios from "axios"
 import './App.css';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import stubs from './defaultStubs'
+import moment from "moment"
 
 function App() {
   const [code, setCode] = useState("")
@@ -8,7 +10,40 @@ function App() {
   const [output, setOutput] = useState("")
   const [status, setStatus] = useState("")
   const [jobId, setJobId] = useState("")
+  const [jobDetails, setJobDetails] = useState(null)
+  
+  useEffect(()=>{
+    const defaultLang = localStorage.getItem("default-language") || "cpp"
+    setLanguage(defaultLang)
+  }, [])
 
+  useEffect(() => {
+    setCode(stubs[language])
+  }, [language])
+  
+  const setDefaultLanguage = () => {
+    localStorage.setItem("default-language", language)
+    console.log(`${language} set as default language`)
+  }
+
+  const renderTimeDetails = () => {
+    if (!jobDetails) {
+      return ""
+    } 
+    
+    let result = ''
+    let {submittedAt, completedAt, startedAt} = jobDetails
+    submittedAt = moment(submittedAt).toString()
+    result += `Submitted At: ${submittedAt}`
+    if (!completedAt || !startedAt){
+      return result
+    }
+    const start = moment(startedAt)
+    const end = moment(completedAt)
+    const executionTime = end.diff(start, 'seconds', true)
+    result += `Execution Time: ${executionTime}s`
+    return result
+  }
 
   const handleSubmit = async () => {
     const payload = {
@@ -19,23 +54,25 @@ function App() {
       setJobId("")
       setStatus("")
       setOutput("")
+      setJobDetails(null)
       const { data } = await axios.post("http://localhost:1000/run", payload)
       console.log(data)
       setJobId(data.jobId)
       let intervalId
 
 
-      
-      intervalId= setInterval(async ()=> {
 
-        const {data: dataRes} = await axios.get("http://localhost:1000/status", 
-        {params: {id: data.jobId}})
-        const {success, job, error } = dataRes
+      intervalId = setInterval(async () => {
+
+        const { data: dataRes } = await axios.get("http://localhost:1000/status",
+          { params: { id: data.jobId } })
+        const { success, job, error } = dataRes
         console.log(dataRes)
 
         if (success) {
-          const {status: jobStatus, output: jobOutput} = job
+          const { status: jobStatus, output: jobOutput } = job
           setStatus(jobStatus)
+          setJobDetails(job)
           if (jobStatus === "pending") return
           setOutput(jobOutput)
           clearInterval(intervalId)
@@ -48,8 +85,8 @@ function App() {
       }, 1000)
 
 
-    } catch ({response}) {
-      if (response){
+    } catch ({ response }) {
+      if (response) {
         const errMsg = response.data.err.stderr
         setOutput(errMsg)
       } else {
@@ -66,9 +103,9 @@ function App() {
         <select
           value={language}
           onChange={
-            (e)=> {
-              setLanguage(e.target.value)
-              console.log(e.target.value)
+            (e) => {
+              let response = window.confirm("WARNING: Switching the language, will remove your current code")
+              if (response)setLanguage(e.target.value)
             }
           }
         >
@@ -77,11 +114,18 @@ function App() {
         </select>
       </div>
       <br />
-      <textarea rows="20" cols="75" value={code} onChange={(e) => { setCode(e.target.value) }}></textarea>
+      <div>
+          <button onClick={setDefaultLanguage}>Set Default</button>
+      </div>
+      <br />
+      <textarea rows="20" cols="75" value={code} onChange={(e) => {
+        setCode(e.target.value)
+      }}></textarea>
       <br />
       <button onClick={handleSubmit}>Submit</button>
       <p>{status}</p>
       <p>{jobId && `JobId: ${jobId}`}</p>
+      <p>{renderTimeDetails}</p>
       <p>{output}</p>
     </div>
   );

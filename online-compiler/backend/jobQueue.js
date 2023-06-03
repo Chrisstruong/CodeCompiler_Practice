@@ -7,7 +7,7 @@ const { executeCpp } = require('./executeCpp')
 const { executePy } = require("./executePy")
 
 jobQueue.process(NUM_WORKERS, async ({ data }) => {
-    console.log(dat)
+    console.log(data)
     const { id: jobId } = data
     const job = await Job.findById(jobId)
     if (job === undefined) {
