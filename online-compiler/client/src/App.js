@@ -26,6 +26,8 @@ function App() {
     console.log(`${language} set as default language`)
   }
 
+
+
   const renderTimeDetails = () => {
     if (!jobDetails) {
       return ""
