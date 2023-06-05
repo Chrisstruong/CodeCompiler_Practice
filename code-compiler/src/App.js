@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import Editor from "@monaco-editor/react";
+import MonacoEditor from './Components/MonacoEditor';
 import Navbar from './Components/Navbar';
 import Axios from 'axios';
 import spinner from './spin.jpeg';
@@ -58,7 +59,7 @@ function clearOutput() {
 
 return (
 	<div className="App">
-	<Navbar
+	{/* <Navbar
 		userLang={userLang} setUserLang={setUserLang}
 		userTheme={userTheme} setUserTheme={setUserTheme}
 		fontSize={fontSize} setFontSize={setFontSize}
@@ -71,10 +72,11 @@ return (
 			width="100%"
 			theme={userTheme}
 			language={userLang}
-			defaultLanguage="python"
-			defaultValue="# Enter your code here"
+			defaultLanguage="javascript"
+			defaultValue="// Enter your code here"
 			onChange={(value) => { setUserCode(value) }}
 		/>
+	
 		<button className="run-btn" onClick={() => compile()}>
 			Run
 		</button>
@@ -101,7 +103,9 @@ return (
 			</div>
 		)}
 		</div>
-	</div>
+		
+	</div> */}
+	<MonacoEditor />
 	</div>
 );
 }
