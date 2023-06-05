@@ -11,6 +11,7 @@ function App() {
   const [status, setStatus] = useState("")
   const [jobId, setJobId] = useState("")
   const [jobDetails, setJobDetails] = useState(null)
+  console.log(`jobDetails: ${jobDetails}`)
   
   useEffect(()=>{
     const defaultLang = localStorage.getItem("default-language") || "cpp"
@@ -127,7 +128,7 @@ function App() {
       <button onClick={handleSubmit}>Submit</button>
       <p>{status}</p>
       <p>{jobId && `JobId: ${jobId}`}</p>
-      <p>{renderTimeDetails}</p>
+      <p>{renderTimeDetails()}</p>
       <p>{output}</p>
     </div>
   );
