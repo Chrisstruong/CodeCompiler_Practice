@@ -3,8 +3,35 @@ import './App.css';
 import React, { useState, useEffect } from 'react'
 import stubs from './defaultStubs'
 import moment from "moment"
+import Editor from "@monaco-editor/react";
 
 function App() {
+  // State variable to set users source code
+	const [userCode, setUserCode] = useState(``);
+
+	// State variable to set editors default language
+	const [userLang, setUserLang] = useState("python");
+
+	// State variable to set editors default theme
+	const [userTheme, setUserTheme] = useState("vs-dark");
+
+	// State variable to set editors default font size
+	const [fontSize, setFontSize] = useState(20);
+
+	// State variable to set users input
+	const [userInput, setUserInput] = useState("");
+
+	// State variable to set users output
+	const [userOutput, setUserOutput] = useState("");
+
+	// Loading state variable to show spinner
+	// while fetching data
+	const [loading, setLoading] = useState(false);
+
+	const options = {
+		fontSize: fontSize
+	}
+
   const [code, setCode] = useState("")
   const [language, setLanguage] = useState("cpp")
   const [output, setOutput] = useState("")
@@ -12,8 +39,8 @@ function App() {
   const [jobId, setJobId] = useState("")
   const [jobDetails, setJobDetails] = useState(null)
   console.log(`jobDetails: ${jobDetails}`)
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     const defaultLang = localStorage.getItem("default-language") || "cpp"
     setLanguage(defaultLang)
   }, [])
@@ -21,7 +48,7 @@ function App() {
   useEffect(() => {
     setCode(stubs[language])
   }, [language])
-  
+
   const setDefaultLanguage = () => {
     localStorage.setItem("default-language", language)
     console.log(`${language} set as default language`)
@@ -32,19 +59,19 @@ function App() {
   const renderTimeDetails = () => {
     if (!jobDetails) {
       return ""
-    } 
-    
+    }
+
     let result = ''
-    let {submittedAt, completedAt, startedAt} = jobDetails
+    let { submittedAt, completedAt, startedAt } = jobDetails
     submittedAt = moment(submittedAt).toString()
-    result += `Submitted At: ${submittedAt}`
-    if (!completedAt || !startedAt){
+    //result += `Submitted At: ${submittedAt}`
+    if (!completedAt || !startedAt) {
       return result
     }
     const start = moment(startedAt)
     const end = moment(completedAt)
     const executionTime = end.diff(start, 'seconds', true)
-    result += `Execution Time: ${executionTime}s`
+    result += `Execution Time: ${executionTime * 1000}ms`
     return result
   }
 
@@ -108,7 +135,7 @@ function App() {
           onChange={
             (e) => {
               let response = window.confirm("WARNING: Switching the language, will remove your current code")
-              if (response)setLanguage(e.target.value)
+              if (response) setLanguage(e.target.value)
             }
           }
         >
@@ -118,12 +145,26 @@ function App() {
       </div>
       <br />
       <div>
-          <button onClick={setDefaultLanguage}>Set Default</button>
+        <button onClick={setDefaultLanguage}>Set Default</button>
       </div>
       <br />
-      <textarea rows="20" cols="75" value={code} onChange={(e) => {
+
+      {/* <textarea rows="20" cols="75" value={code} onChange={(e) => {
         setCode(e.target.value)
-      }}></textarea>
+      }}></textarea> */}
+
+
+
+      <Editor
+        options={options}
+        height="calc(100vh - 50px)"
+        width="100%"
+        theme={"vs-dark"}
+        language={"python"}
+        value={code}
+        onChange={(val) => { setCode(val) }}
+      />
+
       <br />
       <button onClick={handleSubmit}>Submit</button>
       <p>{status}</p>
