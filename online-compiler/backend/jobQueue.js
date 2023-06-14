@@ -5,6 +5,7 @@ const NUM_WORKERS = 5
 const Job = require('./models/Job')
 const { executeCpp } = require('./executeCpp')
 const { executePy } = require("./executePy")
+const { executeJs } = require('./executeJs')
 
 jobQueue.process(NUM_WORKERS, async ({ data }) => {
     console.log(data)
@@ -19,8 +20,10 @@ jobQueue.process(NUM_WORKERS, async ({ data }) => {
         job["startedAt"] = new Date()
         if (job.language === "cpp") {
             output = await executeCpp(job.filepath)
-        } else {
+        } else if (job.language === "py") {
             output = await executePy(job.filepath)
+        } else if (job.language === "js") {
+            output = await executeJs(job.filepath)
         }
 
         job["completedAt"] = new Date()
