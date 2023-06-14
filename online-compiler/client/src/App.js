@@ -117,14 +117,16 @@ function App() {
           value={language}
           onChange={
             (e) => {
-              let response = window.confirm("WARNING: Switching the language, will remove your current code")
-              if (response) setLanguage(e.target.value)
+              // let response = window.confirm("WARNING: Switching the language, will remove your current code")
+              // if (response) 
+              setLanguage(e.target.value)
+              console.log(e.target.value)
             }
           }
         >
           <option value="cpp">C++</option>
           <option value="py">Python</option>
-          <option value="JavaScript">JavaScript</option>
+          <option value="js">JavaScript</option>
 
         </select>
       </div>
@@ -142,7 +144,7 @@ function App() {
 
       <Editor
         options={options}
-        height="calc(100vh - 50px)"
+        height="calc(500px)"
         width="100%"
         theme={"vs-dark"}
         language={"javascript"}
