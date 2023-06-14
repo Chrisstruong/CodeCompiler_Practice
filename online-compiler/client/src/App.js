@@ -6,27 +6,10 @@ import moment from "moment"
 import Editor from "@monaco-editor/react";
 
 function App() {
-  // State variable to set users source code
-	const [userCode, setUserCode] = useState(``);
-
-	// State variable to set editors default language
-	const [userLang, setUserLang] = useState("python");
-
-	// State variable to set editors default theme
-	const [userTheme, setUserTheme] = useState("vs-dark");
 
 	// State variable to set editors default font size
 	const [fontSize, setFontSize] = useState(20);
 
-	// State variable to set users input
-	const [userInput, setUserInput] = useState("");
-
-	// State variable to set users output
-	const [userOutput, setUserOutput] = useState("");
-
-	// Loading state variable to show spinner
-	// while fetching data
-	const [loading, setLoading] = useState(false);
 
 	const options = {
 		fontSize: fontSize
@@ -141,6 +124,8 @@ function App() {
         >
           <option value="cpp">C++</option>
           <option value="py">Python</option>
+          <option value="JavaScript">JavaScript</option>
+
         </select>
       </div>
       <br />
@@ -160,7 +145,7 @@ function App() {
         height="calc(100vh - 50px)"
         width="100%"
         theme={"vs-dark"}
-        language={"python"}
+        language={"javascript"}
         value={code}
         onChange={(val) => { setCode(val) }}
       />
