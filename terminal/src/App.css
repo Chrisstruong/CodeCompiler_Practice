@@ -7,10 +7,15 @@
 }
 
 input {
-  border: none;
+  border-color: white;
   outline: none;
   margin: 0;
   padding: 0;
   background-color: transparent;
   color: white;
+}
+
+.terminal {
+  word-break: break-all;
+  
 }
