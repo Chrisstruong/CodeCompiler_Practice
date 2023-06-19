@@ -155,12 +155,12 @@ function App() {
 
       <br />
       <button onClick={handleSubmit}>Submit</button>
-      <p>{status}</p>
-      <p>{jobId && `JobId: ${jobId}`}</p>
-      <p>{renderTimeDetails()}</p>
-      <p>{output}</p>
+      {/* <p>{status}</p>
+      <p>{jobId && `JobId: ${jobId}`}</p> */}
+      {/* <p>{renderTimeDetails()}</p> */}
+      {/* <p>{output}</p> */}
 
-      <Terminal />
+      <Terminal handleSubmit={handleSubmit} status={status} jobId={jobId} output={output} renderTimeDetails={renderTimeDetails}/>
     </div>
   );
 }

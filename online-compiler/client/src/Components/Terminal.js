@@ -1,22 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import "../Styles/terminal.css"
 
-function Terminal() {
+function Terminal(props) {
     const [input, setInput] = useState('')
     const [output, setOutput] = useState("")
-    const inputRef = useRef()
+    // const inputRef = useRef()
 
-    useEffect(() => {
-        inputRef.current.focus()
-    })
+    // useEffect(() => {
+    //     inputRef.current.focus()
+    // })
 
     return (
         <div
             className="Main"
-            onClick={e => inputRef.current.focus()}
+            // onClick={e => inputRef.current.focus()}
         >
             <input
-                ref={inputRef}
+                // ref={inputRef}
                 type="text"
                 value={input}
                 onChange={e => setInput(e.target.value)}
@@ -26,9 +26,14 @@ function Terminal() {
                         newOutput = output + "\n" + "$ " + input + "\n"
                         switch (input) {
                             case "test":
-                                newOutput += "Testing"
+                                newOutput = ""
+                                newOutput += "[chrisstruong]$ Testing"
+                                props.handleSubmit()
                                 break
+
+                            case "help":
                                 
+
                             case "clear":
                                 newOutput = ""
                                 break
@@ -44,6 +49,15 @@ function Terminal() {
             />
             <div className="terminal">
                 {output}
+                {props.status === "success" ? 
+                <>
+                <p>{props.status}</p>
+                <p>JobId: {props.jobId}</p>
+                <p>{props.output}</p>
+                <p>{props.renderTimeDetails()}</p>
+                </>
+                 : ""}
+                
             </div>
 
         </div>
