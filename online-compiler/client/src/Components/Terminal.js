@@ -26,7 +26,7 @@ function Terminal(props) {
                                 break
 
                             case "help":
-                                newOutput += "\tsdfsdfsdfdstest - execute test cases\nclear - clear the terminal"
+                                newOutput += "test - execute test cases\nclear - clear the terminal"
 
                                 break;
 
