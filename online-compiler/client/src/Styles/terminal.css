@@ -1,0 +1,22 @@
+.Main {
+    background-color: #333;
+    color: white;
+    height: 100vh;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  
+  input {
+    border-color: white;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    color: white;
+    width: 100%;
+  }
+  
+  .terminal {
+    white-space: pre-line;
+  
+  }

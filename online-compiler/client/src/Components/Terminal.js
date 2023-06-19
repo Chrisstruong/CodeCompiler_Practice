@@ -12,6 +12,7 @@ function Terminal () {
 
     return (
         <div
+        className="Main"
         onClick={e => inputRef.current.focus()}
         >
             <input 
@@ -28,7 +29,8 @@ function Terminal () {
                             newOutput += "Testing"
                             break
                         default:
-                            newOutput += "Unknown Command"
+                            newOutput += `Command not found: ${input} \nuse 'help" to view commands`
+                            // newOutput += "Unknown Command"
                     }
                     setOutput(newOutput)
                     setInput("")
