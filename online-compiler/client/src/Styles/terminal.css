@@ -20,3 +20,8 @@
     white-space: pre-line;
   
   }
+
+  .output{
+    font-size: 25px;
+    color:rgb(0, 238, 255);
+  }

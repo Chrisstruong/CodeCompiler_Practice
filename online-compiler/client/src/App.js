@@ -160,7 +160,7 @@ function App() {
       {/* <p>{renderTimeDetails()}</p> */}
       {/* <p>{output}</p> */}
 
-      <Terminal handleSubmit={handleSubmit} status={status} jobId={jobId} output={output} renderTimeDetails={renderTimeDetails}/>
+      <Terminal setStatus={setStatus} handleSubmit={handleSubmit} status={status} jobId={jobId} output={output} renderTimeDetails={renderTimeDetails}/>
     </div>
   );
 }

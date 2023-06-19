@@ -4,16 +4,10 @@ import "../Styles/terminal.css"
 function Terminal(props) {
     const [input, setInput] = useState('')
     const [output, setOutput] = useState("")
-    // const inputRef = useRef()
-
-    // useEffect(() => {
-    //     inputRef.current.focus()
-    // })
 
     return (
         <div
             className="Main"
-            // onClick={e => inputRef.current.focus()}
         >
             <input
                 // ref={inputRef}
@@ -32,10 +26,14 @@ function Terminal(props) {
                                 break
 
                             case "help":
-                                
+                                newOutput += "\tsdfsdfsdfdstest - execute test cases\nclear - clear the terminal"
+
+                                break;
 
                             case "clear":
-                                newOutput = ""
+                                newOutput = ""     
+                                props.setStatus("")
+                                                        
                                 break
 
                             default:
@@ -53,8 +51,9 @@ function Terminal(props) {
                 <>
                 <p>{props.status}</p>
                 <p>JobId: {props.jobId}</p>
-                <p>{props.output}</p>
                 <p>{props.renderTimeDetails()}</p>
+                <p className="output">{props.output}</p>
+               
                 </>
                  : ""}
                 
