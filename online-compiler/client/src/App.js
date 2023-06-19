@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import stubs from './defaultStubs'
 import moment from "moment"
 import Editor from "@monaco-editor/react";
+import Terminal from "./Components/Terminal";
 
 function App() {
 
@@ -158,6 +159,8 @@ function App() {
       <p>{jobId && `JobId: ${jobId}`}</p>
       <p>{renderTimeDetails()}</p>
       <p>{output}</p>
+
+      <Terminal />
     </div>
   );
 }
