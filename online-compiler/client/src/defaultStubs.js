@@ -40,8 +40,6 @@ stubs.js = `const mostFrequentChar = (s) => {
   };
   
   console.log(mostFrequentChar('bookeeper'))
-  console.log(mostFrequentChar('david'))
-  console.log(mostFrequentChar('abby'))
   module.exports = {
     mostFrequentChar,
   }

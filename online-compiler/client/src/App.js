@@ -5,7 +5,6 @@ import stubs from './defaultStubs'
 import moment from "moment"
 import Editor from "@monaco-editor/react";
 import Terminal from "./Components/Terminal";
-import Testing from "./Components/Testing";
 
 function App() {
 
@@ -18,7 +17,7 @@ function App() {
 	}
 
   const [code, setCode] = useState("")
-  let executeCode = code
+ 
 
   const [language, setLanguage] = useState("cpp")
   const [output, setOutput] = useState("")
@@ -66,6 +65,7 @@ function App() {
     const payload = {
       language,
       code,
+      // executeCode,
     }
     try {
       setJobId("")
@@ -155,7 +155,6 @@ function App() {
         value={code}
         onChange={(val) => { setCode(val) }}
       />
-      <p>{code}</p>
 
       <br />
       <button onClick={handleSubmit}>Submit</button>
@@ -165,7 +164,7 @@ function App() {
       {/* <p>{output}</p> */}
 
       <Terminal setStatus={setStatus} handleSubmit={handleSubmit} status={status} jobId={jobId} output={output} renderTimeDetails={renderTimeDetails}/>
-      <Testing code={code}  />
+
     </div>
   );
 }
