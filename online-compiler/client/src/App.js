@@ -18,6 +18,8 @@ function App() {
 	}
 
   const [code, setCode] = useState("")
+  let executeCode = code
+
   const [language, setLanguage] = useState("cpp")
   const [output, setOutput] = useState("")
   const [status, setStatus] = useState("")
@@ -163,7 +165,7 @@ function App() {
       {/* <p>{output}</p> */}
 
       <Terminal setStatus={setStatus} handleSubmit={handleSubmit} status={status} jobId={jobId} output={output} renderTimeDetails={renderTimeDetails}/>
-      <Testing />
+      <Testing code={code}  />
     </div>
   );
 }

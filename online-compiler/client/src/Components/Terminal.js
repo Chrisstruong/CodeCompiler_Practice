@@ -58,7 +58,7 @@ function Terminal(props) {
                  : ""}
                 
             </div>
-
+                
         </div>
     )
 }
