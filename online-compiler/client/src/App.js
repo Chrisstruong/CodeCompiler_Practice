@@ -152,6 +152,7 @@ function App() {
         value={code}
         onChange={(val) => { setCode(val) }}
       />
+      <p>{code}</p>
 
       <br />
       <button onClick={handleSubmit}>Submit</button>
