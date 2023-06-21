@@ -5,6 +5,7 @@ import stubs from './defaultStubs'
 import moment from "moment"
 import Editor from "@monaco-editor/react";
 import Terminal from "./Components/Terminal";
+import Testing from "./Components/Testing";
 
 function App() {
 
@@ -162,6 +163,7 @@ function App() {
       {/* <p>{output}</p> */}
 
       <Terminal setStatus={setStatus} handleSubmit={handleSubmit} status={status} jobId={jobId} output={output} renderTimeDetails={renderTimeDetails}/>
+      <Testing />
     </div>
   );
 }
