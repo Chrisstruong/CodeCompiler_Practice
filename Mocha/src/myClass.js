@@ -29,6 +29,15 @@ class MyClass {
         return best
       
       };
+
+   callAnotherFn (arg1, arg2) {
+    let result = this.add(arg1, arg2)
+    return result
+   }
+
+   callTheCallback(callback) {
+    callback()
+   }
 }
 
 module.exports = MyClass
