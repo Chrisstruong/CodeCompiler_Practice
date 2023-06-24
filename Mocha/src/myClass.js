@@ -3,34 +3,18 @@ class MyClass {
         console.log("initiate")
     }
 
+    sayHello (str) {
+        console.log(str)
+    }
+
     add (arg1, arg2) {
         let result
         result = arg1 + arg2
         return result
     }
 
-    mostFrequentChar = (s) => {
-        // todo
-        const count = {}
-        for (let char of s){
-          if (!(char in count)){
-            count[char]=0
-          } 
-          count[char] +=1
-        }
-        
-        let best = null
-        for (let char of s){
-          if(best === null || count[char] > count[best]){
-            best = char
-          }
-        }
-        
-        return best
-      
-      };
-
    callAnotherFn (arg1, arg2) {
+    this.sayHello("hello world")
     let result = this.add(arg1, arg2)
     return result
    }

@@ -10,9 +10,6 @@ describe("Test suit", function () {
         expect(myObj.add(1, 2)).to.be.equal(3)
     })
 
-    // it("Test the add method", function () {
-    //     expect(myObj.mostFrequentChar(1, 2)).to.be.equal(3)
-    // })
 
     it("spy the add method", function () {
         let spy = sinon.spy(myObj, "add")
@@ -24,9 +21,18 @@ describe("Test suit", function () {
     })
 
     it("spy the callback method", function () {
-        var callback = sinon.spy()
+        let callback = sinon.spy()
         myObj.callTheCallback(callback)
         expect(callback.calledOnce).to.be.true
+    })
+
+    it("mock the sayHello method", function () {
+       let mock = sinon.mock(myObj)
+       let expectation = mock.expects("sayHello")
+       expectation.exactly(1)
+       expectation.withArgs("hello world")
+       myObj.callAnotherFn(10, 20)
+       mock.verify()
     })
 
 })
