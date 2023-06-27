@@ -19,6 +19,14 @@ class MyClass {
     return result
    }
 
+   testPromise() {
+    return new Promise(function(resolve, reject) {
+        setTimeout(() => resolve(3), 6000)
+    }).then(function(result) {
+        return result * 2
+    })
+   }
+
    callTheCallback(callback) {
     callback()
    }

@@ -3,6 +3,8 @@ const sinon = require("sinon")
 const myObj = new MyClass()
 const chai = require("chai")
 const expect = chai.expect
+const chaiaspromise = require("chai-as-promised")
+chai.use(chaiaspromise)
 
 
 describe.skip("Test suit", function () {
@@ -39,7 +41,7 @@ describe.skip("Test suit", function () {
 
 })
 
-describe("Test suit for stub", function () {
+describe.skip("Test suit for stub", function () {
     it("Test the add method", function () {
        let stub = sinon.stub(myObj, "add")
        stub
@@ -48,7 +50,19 @@ describe("Test suit for stub", function () {
        .returns(100)
        .onSecondCall()
        .returns(200)
-       expect(myObj.callAnotherFn(10, 20)).to.be.equal(1000)
-       expect(myObj.callAnotherFn(10, 20)).to.be.equal(2000)
+       expect(myObj.callAnotherFn(10, 20)).to.be.equal(100)
+       expect(myObj.callAnotherFn(10, 20)).to.be.equal(200)
+    })
+})
+
+
+describe("Test the promise", function () {
+    it("Promise test case", function () {
+        this.timeout(0)
+        // myObj.testPromise().then(function(result) {
+        //     expect(result).to.be.equal(6)
+        //     done()
+        // })
+        return expect(myObj.testPromise()).to.eventually.equal(6)
     })
 })
