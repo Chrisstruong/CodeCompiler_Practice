@@ -5,7 +5,7 @@ const chai = require("chai")
 const expect = chai.expect
 
 
-describe("Test suit", function () {
+describe.skip("Test suit", function () {
     it("Test the add method", function () {
         expect(myObj.add(1, 2)).to.be.equal(3)
     })
@@ -35,4 +35,20 @@ describe("Test suit", function () {
        mock.verify()
     })
 
+
+
+})
+
+describe("Test suit for stub", function () {
+    it("Test the add method", function () {
+       let stub = sinon.stub(myObj, "add")
+       stub
+       .withArgs(10, 20)
+       .onFirstCall()
+       .returns(100)
+       .onSecondCall()
+       .returns(200)
+       expect(myObj.callAnotherFn(10, 20)).to.be.equal(1000)
+       expect(myObj.callAnotherFn(10, 20)).to.be.equal(2000)
+    })
 })
