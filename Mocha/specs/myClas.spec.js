@@ -8,11 +8,32 @@ chai.use(chaiaspromise)
 
 
 describe.skip("Test suit", function () {
+    after(function () {
+        console.log("---- After the test suit")
+    })
+    before(function () {
+        console.log("---- Before the test suit")
+    })
+    afterEach(function () {
+        console.log("---- After each the test suit")
+    })
+    beforeEach(function () {
+        console.log("---- Before each the test suit")
+    })
+    
     it("Test the add method", function () {
         expect(myObj.add(1, 2)).to.be.equal(3)
     })
 
 
+    it("spy the add method", function () {
+        let spy = sinon.spy(myObj, "add")
+        let arg1 = 10, arg2 = 20
+        myObj.callAnotherFn(arg1, arg2)
+        sinon.assert.calledOnce(spy)
+        expect(spy.calledOnce).to.be.true
+        expect(spy.calledWith(10, 20)).to.be.true
+    })
     it("spy the add method", function () {
         let spy = sinon.spy(myObj, "add")
         let arg1 = 10, arg2 = 20

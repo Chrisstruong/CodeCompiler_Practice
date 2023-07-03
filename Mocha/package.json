@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha './specs/**/*.spec.js'",
-    "test2": "mocha --reporter mochawesome --reporter-options reportDir=customReportDir,reportFilename=customReportFilename"
+    "test": "mocha './specs/**/*.spec.js'"
   },
   "author": "",
   "license": "ISC",
