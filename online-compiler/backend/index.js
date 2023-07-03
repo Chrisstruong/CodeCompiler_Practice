@@ -4,6 +4,8 @@ require("dotenv").config()
 require("./config/db.connection")
 const {MONGODB_URI, PORT} = process.env
 
+const mochaController = require('./controllers/mocha-controller')
+
 
 const {generateFile} =  require('./generateFile')
 
@@ -67,6 +69,8 @@ app.post("/run", async (req, res) => {
         return res.status(500).json({success: false, err: JSON.stringify(err)})
     }
 })
+
+app.use("/mocha", mochaController)
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}!`)
