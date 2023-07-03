@@ -8,7 +8,7 @@ describe("GET API Request Tests", async () => {
         const randomJobTitle = faker.name.jobTitle()
         const res = await axios.post('https://reqres.in/api/users', {
             "name": "randomName",
-            "job": "randomJobTitle"
+            "job": "randomJobTitle",
         })
         console.log(res.data)
         expect(res.data.name).equal("randomName")
