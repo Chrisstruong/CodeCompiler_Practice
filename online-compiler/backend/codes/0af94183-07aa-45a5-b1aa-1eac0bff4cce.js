@@ -1,2 +1,4 @@
 
-console.log(123)
+const helloWorld = (s) => {
+    console.log("123")
+}

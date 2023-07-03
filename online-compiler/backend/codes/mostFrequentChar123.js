@@ -19,9 +19,7 @@ const mostFrequentChar = (s) => {
   
   };
   
-  console.log(mostFrequentChar('bookeeper'))
-  console.log(mostFrequentChar('david'))
-  console.log(mostFrequentChar('abby'))
+  // console.log(mostFrequentChar('bookeeper'))
   module.exports = {
     mostFrequentChar,
   }
