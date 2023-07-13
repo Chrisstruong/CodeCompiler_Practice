@@ -8,6 +8,8 @@ let app = express();//
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+//Rework on the project
 app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
